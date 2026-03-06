@@ -1,0 +1,20 @@
+Project: vids
+URL: https://zenodo.org/record/18895071
+DOI: 10.5281/zenodo.18895071
+Website: glimmary.com
+
+source
+
+https://www.sciencedirect.com/science/article/pii/S1361841524003074
+
+View
+Version:
+Automated volumetric segmentation of the pancreas on cross-sectional imaging is needed for diagnosis and follow-up of pancreatic diseases. While CT-based pancreatic segmentation is more established, MRI-based segmentation methods are understudied, largely due to a lack of publicly available datasets, benchmarking research efforts, and domain-specific deep learning methods. In this retrospective study, we collected a large dataset (767 scans from 499 participants) of T1-weighted (T1W) and T2-weighted (T2W) abdominal MRI series from five centers between March 2004 and November 2022. We also collected CT scans of 1,350 patients from publicly available sources for benchmarking purposes. We developed a new pancreas segmentation method, called \textit{PanSegNet}, combining the strengths of \textit{nnUNet} and a \textit{Transformer} network with a new linear attention module enabling volumetric computation. We tested \textit{PanSegNet}’s accuracy in cross-modality (a total of 2,117 scans) and cross-center settings with Dice and Hausdorff distance (HD95) evaluation metrics. We used Cohen’s kappa statistics for intra and inter-rater agreement evaluation and paired t-tests for volume and Dice comparisons, respectively. For segmentation accuracy, we achieved Dice coefficients of 88.3% (± 7.2%, at case level) with CT, 85.0% (± 7.9%) with T1W MRI, and 86.3% (± 6.4%) with T2W MRI. There was a high correlation for pancreas volume prediction with 
+R
+2
+ of 0.91, 0.84, and 0.85 for CT, T1W, and T2W, respectively. We found moderate inter-observer (0.624 and 0.638 for T1W and T2W MRI, respectively) and high intra-observer agreement scores.
+
+Paper is available under https://arxiv.org/abs/2405.12367
+
+Contact
+Email Ulas.bagci@northwestern.edu if you have any questions about the dataset and our research activities. Ulas.bagci@northwestern.edu should be contacted in case of commercial interests with the data. We always welcome collaboration and joint research!
