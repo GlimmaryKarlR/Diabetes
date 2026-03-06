@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pancreatic Volumetric Kinematics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+            background: #1e293b;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .flow-box {
+            background: #334155;
+            border-left: 4px solid #38bdf8;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .math-block {
+            background: #0f172a;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: monospace;
+            color: #38bdf8;
+            text-align: center;
+            font-size: 1.125rem;
+        }
+    </style>
+</head>
+<body class="antialiased pb-20">
+
+    <div hidden id="metadata" data-palette="Deep Ocean & Bright Aqua" data-no-svg="confirmed" data-no-mermaid="confirmed"></div>
+
+    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">
+                Pancreatic Kinematics: 4D Morphological Analysis
+            </h1>
+            <p class="mt-2 text-slate-400 text-sm md:text-base">
+                Diagnostic modeling of T1-weighted mesh arrays (12D Vector Analysis) for early-stage diabetes detection.
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 space-y-12">
+
+        <section class="bg-slate-800 rounded-xl p-6 shadow-xl border border-slate-700">
+            <h2 class="text-2xl font-semibold text-sky-400 mb-4">&#x1F52C; The 12D Volumetric Postulate</h2>
+            <p class="text-slate-300 leading-relaxed mb-4">
+                By extracting structural mesh data at 60fps from T1-weighted scans, we analyze the micro-deformations of the pancreas. The vector components isolate temporal positioning (t, x, y, z), metabolic proxy intensity (R, G, B), surface morphology (Nx, Ny, Nz), and kinetic strain (d, th). We postulate that localized reduction in kinematic magnitude (d) coupled with increased torsional strain (th) acts as a primary mechanical biomarker for fibrotic stiffening, preceding the onset of clinical diabetes.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                <div class="bg-slate-900 p-4 rounded-lg">
+                    <h3 class="text-emerald-400 font-bold mb-2">Kinematic Velocity</h3>
+                    <div class="math-block">$$v = \frac{d}{\Delta t}$$</div>
+                    <p class="text-xs text-slate-400 mt-2 text-center">Deformation speed indicating tissue elasticity.</p>
+                </div>
+                <div class="bg-slate-900 p-4 rounded-lg">
+                    <h3 class="text-emerald-400 font-bold mb-2">Torsional Strain</h3>
+                    <div class="math-block">$$U = \frac{1}{2} \kappa \theta^2$$</div>
+                    <p class="text-xs text-slate-400 mt-2 text-center">Energy stored via rotation, mapping rigid zones.</p>
+                </div>
+                <div class="bg-slate-900 p-4 rounded-lg">
+                    <h3 class="text-emerald-400 font-bold mb-2">Metabolic Flux</h3>
+                    <div class="math-block">$$\Phi_E = \iint_{S} \mathbf{F} \cdot \mathbf{\hat{n}} \, dA$$</div>
+                    <p class="text-xs text-slate-400 mt-2 text-center">Intensity projection across surface normals.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-semibold text-sky-400 mb-6">&#x1F4C8; Core Kinematic Diagnostics</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <div class="bg-slate-800 rounded-xl p-6 shadow-xl border border-slate-700">
+                    <h3 class="text-lg font-bold text-slate-200 mb-2">Micro-Deformation Over Time (1/60s intervals)</h3>
+                    <p class="text-sm text-slate-400 mb-4">
+                        Tracks the average kinematic magnitude (d, measured in micrometers) and torsional shift (th, in radians) across the pancreatic head over a 1-second pulse interval. Divergence indicates stiffening.
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="kinematicChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800 rounded-xl p-6 shadow-xl border border-slate-700">
+                    <h3 class="text-lg font-bold text-slate-200 mb-2">Energy Proxy vs. Tissue Strain</h3>
+                    <p class="text-sm text-slate-400 mb-4">
+                        Correlates the RGB scalar (metabolic proxy) against structural strain (d/th ratio). Bubble size represents surface normal variance. Healthy tissue clusters at high proxy, low strain.
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="energyStrainChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-semibold text-sky-400 mb-6">&#x1F9EC; Diagnostic Segmentation</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <div class="bg-slate-800 rounded-xl p-6 shadow-xl border border-slate-700">
+                    <h3 class="text-lg font-bold text-slate-200 mb-2">Regional Biomechanical Health</h3>
+                    <p class="text-sm text-slate-400 mb-4">
+                        Compares multiple mesh sectors. A critical drop in localized elasticity in the pancreatic tail often correlates with early islet beta-cell degradation.
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="regionalChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800 rounded-xl p-6 shadow-xl border border-slate-700">
+                    <h3 class="text-lg font-bold text-slate-200 mb-4">Diagnostic Processing Pipeline</h3>
+                    <div class="flex flex-col h-full justify-center pb-8">
+                        <div class="flow-box">
+                            <span class="font-bold text-sky-400">1. Data Extraction</span>
+                            <p class="text-sm text-slate-300 mt-1">Isolate high-frequency (60fps) T1-W mesh vectors.</p>
+                        </div>
+                        <div class="text-center text-slate-500 my-1">&#x2B07;</div>
+                        <div class="flow-box">
+                            <span class="font-bold text-sky-400">2. Vector Analysis</span>
+                            <p class="text-sm text-slate-300 mt-1">Compute instantaneous kinematics (v) and surface normal variance.</p>
+                        </div>
+                        <div class="text-center text-slate-500 my-1">&#x2B07;</div>
+                        <div class="flow-box border-emerald-400">
+                            <span class="font-bold text-emerald-400">3. Biomarker Isolation</span>
+                            <p class="text-sm text-slate-300 mt-1">Detect focal regions with anomalous stiffening (high theta, low d).</p>
+                        </div>
+                        <div class="text-center text-slate-500 my-1">&#x2B07;</div>
+                        <div class="flow-box border-rose-400">
+                            <span class="font-bold text-rose-400">4. Clinical Output</span>
+                            <p class="text-sm text-slate-300 mt-1">Early prediction of pre-diabetic fibrotic progression.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="bg-slate-800 rounded-xl p-6 shadow-xl border border-slate-700">
+            <h2 class="text-2xl font-semibold text-sky-400 mb-2">&#x1F310; Predictive Model Profiling</h2>
+            <p class="text-slate-300 mb-6">
+                Comparative analysis of overall mesh parameters between a healthy control baseline and an identified pre-diabetic signature found within the dataset.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-8">
+                 <div class="chart-container" style="max-width: 700px; height: 450px; max-height: 500px;">
+                    <canvas id="radarChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const processLabel = (label) => {
+            if (label.length <= 16) return label;
+            const words = label.split(' ');
+            let lines = [];
+            let currentLine = words[0];
+            for (let i = 1; i < words.length; i++) {
+                if (currentLine.length + words[i].length + 1 <= 16) {
+                    currentLine += ' ' + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        };
+
+        const commonTooltipConfig = {
+            tooltip: {
+                callbacks: {
+                    title: function(tooltipItems) {
+                        const item = tooltipItems[0];
+                        let label = item.chart.data.labels[item.dataIndex];
+                        if (Array.isArray(label)) {
+                            return label.join(' ');
+                        } else {
+                            return label;
+                        }
+                    }
+                }
+            }
+        };
+
+        const setupChart = (elementId, type, data, options) => {
+            const ctx = document.getElementById(elementId).getContext('2d');
+            if (data.labels) {
+                data.labels = data.labels.map(processLabel);
+            }
+            new Chart(ctx, {
+                type: type,
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#cbd5e1' } },
+                        ...commonTooltipConfig
+                    },
+                    ...options
+                }
+            });
+        };
+
+        const gridConfig = { color: '#334155' };
+        const tickConfig = { color: '#94a3b8' };
+
+        const kinematicLabels = Array.from({length: 15}, (_, i) => `t=${(i*0.0167).toFixed(3)}s`);
+        setupChart('kinematicChart', 'line', {
+            labels: kinematicLabels,
+            datasets: [
+                {
+                    label: 'Magnitude (d) μm',
+                    data: [12, 14, 15, 13, 11, 10, 11, 14, 16, 15, 12, 10, 9, 11, 13],
+                    borderColor: '#38bdf8',
+                    backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                },
+                {
+                    label: 'Torsion (th) rad x10',
+                    data: [5, 6, 8, 7, 5, 4, 5, 7, 9, 8, 6, 5, 4, 5, 6],
+                    borderColor: '#fb7185',
+                    backgroundColor: 'transparent',
+                    borderDash: [5, 5],
+                    tension: 0.4
+                }
+            ]
+        }, {
+            scales: {
+                y: { grid: gridConfig, ticks: tickConfig },
+                x: { grid: gridConfig, ticks: tickConfig }
+            }
+        });
+
+        setupChart('energyStrainChart', 'bubble', {
+            datasets: [{
+                label: 'Healthy Mesh Sectors',
+                data: [
+                    {x: 75, y: 1.2, r: 10}, {x: 80, y: 1.1, r: 12}, {x: 85, y: 0.9, r: 8},
+                    {x: 70, y: 1.4, r: 15}, {x: 90, y: 1.0, r: 11}
+                ],
+                backgroundColor: 'rgba(52, 211, 153, 0.6)',
+                borderColor: '#34d399'
+            }, {
+                label: 'Pre-Diabetic Rigid Sectors',
+                data: [
+                    {x: 45, y: 3.5, r: 6}, {x: 50, y: 3.2, r: 7}, {x: 40, y: 4.1, r: 5},
+                    {x: 55, y: 2.9, r: 8}, {x: 35, y: 4.5, r: 4}
+                ],
+                backgroundColor: 'rgba(251, 113, 133, 0.6)',
+                borderColor: '#fb7185'
+            }]
+        }, {
+            scales: {
+                y: { 
+                    title: { display: true, text: 'Strain Ratio (th / d)', color: '#94a3b8' },
+                    grid: gridConfig, ticks: tickConfig 
+                },
+                x: { 
+                    title: { display: true, text: 'Energy Proxy (RGB composite)', color: '#94a3b8' },
+                    grid: gridConfig, ticks: tickConfig 
+                }
+            }
+        });
+
+        setupChart('regionalChart', 'bar', {
+            labels: ['Pancreatic Head Region', 'Central Body Region', 'Distal Tail Region'],
+            datasets: [{
+                label: 'Mean Kinematic Velocity',
+                data: [0.85, 0.72, 0.41],
+                backgroundColor: '#38bdf8'
+            }, {
+                label: 'Surface Normal Variance',
+                data: [0.65, 0.60, 0.88],
+                backgroundColor: '#a78bfa'
+            }]
+        }, {
+            scales: {
+                y: { grid: gridConfig, ticks: tickConfig },
+                x: { grid: gridConfig, ticks: tickConfig }
+            }
+        });
+
+        setupChart('radarChart', 'radar', {
+            labels: [
+                'Volumetric Stability Index', 
+                'Kinematic Elasticity', 
+                'Metabolic Proxy Flux', 
+                'Torsional Resilience', 
+                'Surface Uniformity'
+            ],
+            datasets: [{
+                label: 'Healthy Baseline',
+                data: [90, 85, 88, 80, 92],
+                fill: true,
+                backgroundColor: 'rgba(56, 189, 248, 0.2)',
+                borderColor: '#38bdf8',
+                pointBackgroundColor: '#38bdf8',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: '#38bdf8'
+            }, {
+                label: 'Pre-Diabetic Signature',
+                data: [65, 40, 55, 30, 45],
+                fill: true,
+                backgroundColor: 'rgba(251, 113, 133, 0.2)',
+                borderColor: '#fb7185',
+                pointBackgroundColor: '#fb7185',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: '#fb7185'
+            }]
+        }, {
+            scales: {
+                r: {
+                    angleLines: { color: '#475569' },
+                    grid: { color: '#475569' },
+                    pointLabels: { color: '#cbd5e1', font: { size: 11 } },
+                    ticks: { display: false }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
